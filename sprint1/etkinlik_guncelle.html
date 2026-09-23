@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Etkinlik Güncelle</title>
+</head>
+<body>
+    
+    <header>
+        <h1>Kampüs Etkinlikleri</h1>
+        <nav>
+            <a href="index.html">Ana Sayfa</a> |
+            <a href="etkinlikler.html">Etkinlikler</a> |
+            <a href="etkinlik-detay.html">Detay</a> |
+            <a href="etkinlik-ekle.html">Ekle</a>
+        </nav>
+    </header>
+
+    <main>
+        
+        <h2>Etkinlik Güncelle</h2>
+
+        <form action="#" method="get">
+            
+            <div>
+                <label for="etkinlik_adi">Etkinlik Adı</label><br>
+                <input type="text" id="etkinlik_adi" name="etkinlik_adi" value="Kariyer Günleri 2026" required>
+            </div>
+            <br>
+
+            <div>
+                <label for="kategori">Kategori</label><br>
+                <select id="kategori" name="kategori" required>
+                    <option value="">Seçiniz...</option>
+                    <option value="Seminer" selected>Seminer</option>
+                    <option value="Atölye">Atölye</option>
+                    <option value="Konser">Konser</option>
+                </select>
+            </div>
+            <br>
+
+            <div>
+                <label for="tarih">Tarih</label><br>
+                <input type="date" id="tarih" name="tarih" value="2026-10-12" required>
+            </div>
+            <br>
+            
+            <div>
+                <label for="saat">Saat</label><br>
+                <input type="time" id="saat" name="saat" value="14:00" required>
+            </div>
+            <br>
+
+            <div>
+                <label for="yer">Yer</label><br>
+                <input type="text" id="yer" name="yer" value="A Blok Konferans Salonu" required>
+            </div>
+            <br>
+
+            <div>
+                <label for="aciklama">Açıklama</label><br>
+                <textarea id="aciklama" name="aciklama" rows="4" required>Öğrenciler için düzenlenen kariyer planlama semineri.</textarea>
+            </div>
+            <br>
+
+            <button type="submit">Güncelle</button>
+        </form>
+        
+    </main>
+
+    <footer>
+        <p>2026 Kampüs Etkinlikleri</p>
+    </footer>
+
+</body>
+</html>
