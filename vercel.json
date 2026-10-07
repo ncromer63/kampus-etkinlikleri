@@ -1,0 +1,13 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "destination": "/sprint3/index.html" },
+    { "source": "/index.html", "destination": "/sprint3/index.html" },
+    { "source": "/etkinlikler.html", "destination": "/sprint3/etkinlikler.html" },
+    { "source": "/etkinlik-detay.html", "destination": "/sprint3/etkinlik-detay.html" },
+    { "source": "/etkinlik-ekle.html", "destination": "/sprint3/etkinlik-ekle.html" },
+    { "source": "/etkinlik-guncelle.html", "destination": "/sprint3/etkinlik-guncelle.html" },
+    { "source": "/js/:path*", "destination": "/sprint3/js/:path*" },
+    { "source": "/css/:path*", "destination": "/sprint3/css/:path*" }
+  ]
+}
