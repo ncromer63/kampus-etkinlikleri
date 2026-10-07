@@ -1,24 +1,18 @@
-https://kampus-etkinlikleri-seven.vercel.app/
+﻿https://kampus-etkinlikleri-seven.vercel.app/
 
-# Kampüs Etkinlikleri - Sprint 3
+# Kampüs Etkinlikleri
 
-Bu proje, Kampüs Etkinlikleri uygulamasının JavaScript ve DOM manipülasyonu ile dinamik hale getirilmiş sürümüdür.
+Bu depo, Üniversite Kampüs Etkinlikleri uygulamasının Sprint 1, Sprint 2 ve Sprint 3 adımlarını içermektedir.
 
-## Yapılan Geliştirmeler (Sprint 3)
-1. **data.js**: En az 6 etkinlik nesnesi içeren modüler veri yapısı oluşturuldu.
-2. **event-list.js**:
-   - Etkinlik kartları JavaScript ile dinamik üretildi.
-   - Ana sayfada (`data-limit="2"`) yaklaşan en yakın 2 etkinlik listelendi.
-   - Etkinlikler sayfasında arama kutusu ve kategori filtresi (Set ile tekil üretilen kategoriler) dinamik bağlandı.
-   - Türkçe karakter duyarlı arama (`toLocaleLowerCase("tr-TR")`) ve sonuç sayısı bilgilendirmesi eklendi.
-3. **event-detail.js**:
-   - `?id=` parametresi URL'den okunarak ilgili etkinliğin künyesi, afişi ve detayları render edildi.
-   - Geçersiz veya bulunamayan id durumunda konsol hatası vermeden kırmızı hata kutusu ve listeye dönüş butonu gösterildi.
-4. **event-form.js**:
-   - `etkinlik-ekle.html` ve `etkinlik-guncelle.html` için ortak form yönetim modülü geliştirildi.
-   - Tarayıcının varsayılan balonları kapatılıp (`novalidate`), özel JavaScript doğrulaması (ad >= 3 karakter, zorunlu alanlar, 1-1000 kontenjan aralığı vb.) ve `aria-invalid` erişilebilirlik nitelikleri uygulandı.
-   - Güncelleme modunda form alanları ilgili etkinlik verileriyle otomatik dolduruldu, id'siz erişimlerde uyarı kutusu gösterildi.
-   - Hata yoksa oluşturulan / güncellenen veri nesnesi yeşil kutuda JSON olarak görüntülendi.
+## Canlı Yayın Adresi
+- **Vercel Canlı Link:** https://kampus-etkinlikleri-seven.vercel.app/
+- **Örnek Detay Testi:** https://kampus-etkinlikleri-seven.vercel.app/etkinlik-detay.html?id=event-3
+
+## Sprintler
+1. **Sprint 1 (HTML, Git ve Yayına Alma):** Semantik HTML iskeleti, 5 sayfa, erişilebilir formlar (sprint-01).
+2. **Sprint 2 (CSS ve Responsive Tasarım):** Numaraya göre CSS değişkenleri (--ton: 5, --font: "Times New Roman"), grid kart düzeni, responsive tasarım (sprint-02).
+3. **Sprint 3 (JavaScript ve DOM):** Modüler ES yapısı (data.js, event-list.js, event-detail.js, event-form.js), arama + dinamik kategori filtreleme, URLSearchParams ile detay sayfası (?id=), 
+ovalidate ve ria-invalid form validasyonu (sprint-03).
 
 ## Öğrenci Bilgileri
 - **Ad Soyad:** Ömer Nacar
