@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Etkinlik Ekle - Kampüs Etkinlikleri</title>
+  <title>Etkinlik Güncelle - Kampüs Etkinlikleri</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
   <link rel="stylesheet" href="css/2416501085.css">
 </head>
@@ -11,32 +11,32 @@
 
   <header>
     <div class="header-container">
-      <h1>Etkinlik Ekle</h1>
-      <p class="subtitle">Fakültede yeni bir etkinlik planlayın.</p>
+      <h1>Etkinlik Güncelle</h1>
+      <p class="subtitle">Mevcut etkinlik bilgilerini güncelleyin.</p>
       <nav>
         <a href="index.html">Ana Sayfa</a>
         <a href="etkinlikler.html">Etkinlikler</a>
-        <a href="etkinlik-ekle.html" class="active">Ekle</a>
-        <a href="etkinlik-guncelle.html">Güncelle</a>
+        <a href="etkinlik-ekle.html">Ekle</a>
+        <a href="etkinlik-guncelle.html" class="active">Güncelle</a>
       </nav>
     </div>
   </header>
 
   <main>
     <div class="form-container">
-      <p class="form-info">Yıldızlı (*) alanlar zorunludur.</p>
+      <p class="form-info">Alanlar mevcut etkinliğin bilgileriyle dolu gelir.</p>
 
       <form action="#" method="get">
         <div class="form-grup">
           <label for="ad">Etkinlik Adı *</label>
-          <input type="text" id="ad" name="ad" placeholder="Örn. Web Tasarım Atölyesi" required>
+          <input type="text" id="ad" name="ad" value="Kariyer Günleri 2026" required>
         </div>
 
         <div class="form-grup">
           <label for="kategori">Kategori *</label>
           <select id="kategori" name="kategori" required>
             <option value="">Seçiniz ▾</option>
-            <option value="Seminer">Seminer</option>
+            <option value="Seminer" selected>Seminer</option>
             <option value="Atölye">Atölye</option>
             <option value="Söyleşi">Söyleşi</option>
             <option value="Konser">Konser</option>
@@ -45,25 +45,25 @@
 
         <div class="form-grup">
           <label for="tarih">Tarih *</label>
-          <input type="date" id="tarih" name="tarih" required>
+          <input type="date" id="tarih" name="tarih" value="2026-10-12" required>
         </div>
 
         <div class="form-grup">
           <label for="saat">Saat *</label>
-          <input type="time" id="saat" name="saat" required>
+          <input type="time" id="saat" name="saat" value="14:00" required>
         </div>
 
         <div class="form-grup">
           <label for="yer">Yer *</label>
-          <input type="text" id="yer" name="yer" placeholder="Örn. A Blok Konferans Salonu" required>
+          <input type="text" id="yer" name="yer" value="A Blok Konferans Salonu" required>
         </div>
 
         <div class="form-grup">
           <label for="aciklama">Açıklama</label>
-          <textarea id="aciklama" name="aciklama" rows="4" placeholder="Etkinlik hakkında kısa bilgi..."></textarea>
+          <textarea id="aciklama" name="aciklama" rows="4">Mezunlarla kariyer söyleşileri ve şirket standları.</textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary">Kaydet</button>
+        <button type="submit" class="btn btn-primary">Güncelle</button>
       </form>
     </div>
   </main>

@@ -1,46 +1,59 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <title>Kampüs Etkinlikleri - Ana Sayfa</title>
-    <link rel="stylesheet" href="css/2416501085.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kampüs Etkinlikleri - Ana Sayfa</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+  <link rel="stylesheet" href="css/2416501085.css">
 </head>
 <body>
-    
-    <header>
-        <h1>Kampüs Etkinlikleri</h1>
-        <nav>
-            <a href="index.html">Ana Sayfa</a> |
-            <a href="etkinlikler.html">Etkinlikler</a> |
-            <a href="etkinlik-detay.html">Detay</a> |
-            <a href="etkinlik-ekle.html">Ekle</a>
-        </nav>
-    </header>
 
-    <main>
-        
-        <section>
-            <p>Kampüs Etkinlikleri uygulaması, üniversite içerisindeki etkinlikleri tek bir noktadan takip etmenizi, yaklaşan programlardan haberdar olmanızı ve yeni etkinlikler oluşturmanızı sağlar.</p>
-        </section>
+  <header>
+    <div class="header-container">
+      <h1>Kampüs Etkinlikleri</h1>
+      <p class="subtitle">Fakültedeki seminer, atölye ve söyleşileri tek yerden takip edin.</p>
+      <nav>
+        <a href="index.html" class="active">Ana Sayfa</a>
+        <a href="etkinlikler.html">Etkinlikler</a>
+        <a href="etkinlik-ekle.html">Ekle</a>
+        <a href="etkinlik-guncelle.html">Güncelle</a>
+      </nav>
+    </div>
+  </header>
 
-        
-        <section>
-            <p>Kariyer Günleri 2026</p>
-            <p>Seminer | 12 Ekim | A Blok</p>
-            <a href="etkinlik-detay.html">Detayları gör</a>
-        </section>
+  <main>
+    <section>
+      <h2 class="section-title">Yaklaşan 2 Etkinlik</h2>
+      <section class="etkinlik-listesi">
+        <article class="kart">
+          <h2>Kariyer Günleri 2026</h2>
+          <p class="kategori">Seminer</p>
+          <p class="tarih-saat">Tarih: 12 Ekim 2026, 14:00</p>
+          <p class="yer">Yer: A Blok Konferans Salonu</p>
+          <p class="aciklama">Mezunlarla kariyer söyleşileri ve şirket standları.</p>
+          <a href="etkinlik-detay.html" class="detay-link">Detayları gör</a>
+        </article>
 
-        <section>
-            <p>Robotik Atölyesi</p>
-            <p>Atölye | 20 Ekim | Lab 2</p>
-            <a href="etkinlik-detay.html">Detayları gör</a>
-        </section>
-    </main>
+        <article class="kart">
+          <h2>Robotik Atölyesi</h2>
+          <p class="kategori"><span class="kategori-badge">Atölye</span></p>
+          <p class="tarih-saat">Tarih: 20 Ekim 2026, 10:00</p>
+          <p class="yer">Yer: Bilgisayar Laboratuvarı 2</p>
+          <p class="aciklama">Arduino ile çizgi izleyen robot yapımı, başlangıç seviyesi.</p>
+          <a href="etkinlik-detay.html" class="detay-link">Detayları gör</a>
+        </article>
+      </section>
 
-    
-    <footer>
-        <p>2026 Kampüs Etkinlikleri</p>
-    </footer>
+      <div class="all-events-btn-wrapper">
+        <a href="etkinlikler.html" class="detay-link">Tümünü gör →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Ömer Nacar · 2416501085 · 2026</p>
+  </footer>
 
 </body>
 </html>
