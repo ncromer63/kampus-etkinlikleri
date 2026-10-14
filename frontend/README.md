@@ -1,32 +1,34 @@
-# React + TypeScript + Vite
+https://kampus-etkinlikleri-seven.vercel.app/
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+# Kampüs Etkinlikleri — Frontend (Sprint 4)
 
-Currently, two official plugins are available:
+Bu klasör, Vite + React + TypeScript mimarisiyle oluşturulmuş Kampüs Etkinlikleri web arayüzünü içerir.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Canlı Yayın
+- **Vercel Canlı Link:** https://kampus-etkinlikleri-seven.vercel.app/
+- **Vercel Ayarı:** Root Directory: `frontend`, Framework Preset: `Vite`
 
-## React Compiler
+## Dosyalar ve Görevleri
+- `package.json` — Proje adı, komutlar (dev, build), paket listesi.
+- `package-lock.json` — Yüklenen paketlerin tam sürümleri.
+- `node_modules/` — İndirilen paketler; GitHub'a gitmez.
+- `tsconfig*.json` — TypeScript ayarları.
+- `vite.config.ts` — Vite ayarları, React eklentisi.
+- `index.html` — Tek HTML; içinde boş div#root.
+- `src/main.tsx` — React'i başlatır, App'i root'a çizer.
+- `src/App.tsx` — Uygulamanın ana bileşeni (5 sayfa, state ile geçiş).
+- `src/App.css` — App'in stilleri; Sprint 3 CSS'i buraya (öğrenci no: 2416501085).
+- `src/index.css` — Tüm sayfaya genel stil; bu sprintte boş.
+- `public/` — Olduğu gibi kopyalanan dosyalar (afiş ve favicon).
+- `src/types/campus-event.ts` — Etkinlik ve kategori tipleri (`CampusEvent`, `Category`).
+- `src/data/events.ts` — Tipli 6 adet etkinlik kaydı (`CampusEvent[]`).
+- `src/utils/filter-events.ts` — Saf arama ve filtreleme fonksiyonları.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Geliştirme ve Derleme
+- Geliştirme sunucusu: `npm run dev`
+- Üretim derlemesi: `npm run build`
+- Önizleme: `npm run preview`
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
-
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Öğrenci Bilgileri
+- **Ad Soyad:** Ömer Nacar
+- **Öğrenci No:** 2416501085
