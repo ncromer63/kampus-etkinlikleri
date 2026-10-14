@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 800" role="img" aria-labelledby="title desc">
+  <title id="title">Kariyer Günleri 2026 afi?i</title>
+  <desc id="desc">Kampüs kariyer günleri etkinlik afi?i</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7a1f1a"/>
+      <stop offset="100%" stop-color="#3d0e0c"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="800" fill="url(#bg)"/>
+  <rect x="32" y="32" width="576" height="736" fill="none" stroke="#f8e7d8" stroke-width="3"/>
+  <text x="320" y="140" text-anchor="middle" fill="#f8e7d8" font-family="Times New Roman, serif" font-size="28" letter-spacing="6">SEMINER</text>
+  <text x="320" y="280" text-anchor="middle" fill="#ffffff" font-family="Times New Roman, serif" font-size="52" font-weight="700">Kariyer</text>
+  <text x="320" y="350" text-anchor="middle" fill="#ffffff" font-family="Times New Roman, serif" font-size="52" font-weight="700">Günleri</text>
+  <text x="320" y="430" text-anchor="middle" fill="#f4c27a" font-family="Times New Roman, serif" font-size="40">2026</text>
+  <line x1="180" y1="480" x2="460" y2="480" stroke="#f8e7d8" stroke-width="2"/>
+  <text x="320" y="560" text-anchor="middle" fill="#f8e7d8" font-family="Times New Roman, serif" font-size="24">12 Ekim · 14:00</text>
+  <text x="320" y="610" text-anchor="middle" fill="#f8e7d8" font-family="Times New Roman, serif" font-size="22">A Blok Konferans Salonu</text>
+  <text x="320" y="710" text-anchor="middle" fill="#f4c27a" font-family="Times New Roman, serif" font-size="20">Kampüs Etkinlikleri</text>
+</svg>
