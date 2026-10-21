@@ -1,20 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 800" role="img" aria-labelledby="title desc">
-  <title id="title">Kariyer Günleri 2026 afi?i</title>
-  <desc id="desc">Kampüs kariyer günleri etkinlik afi?i</desc>
+ï»¿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 800" role="img">
+  <title>Kariyer G&#252;nleri 2026 Afi&#351;i</title>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="bgKariyer" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#7a1f1a"/>
       <stop offset="100%" stop-color="#3d0e0c"/>
     </linearGradient>
   </defs>
-  <rect width="640" height="800" fill="url(#bg)"/>
+  <rect width="640" height="800" fill="url(#bgKariyer)"/>
   <rect x="32" y="32" width="576" height="736" fill="none" stroke="#f8e7d8" stroke-width="3"/>
-  <text x="320" y="140" text-anchor="middle" fill="#f8e7d8" font-family="Times New Roman, serif" font-size="28" letter-spacing="6">SEMINER</text>
-  <text x="320" y="280" text-anchor="middle" fill="#ffffff" font-family="Times New Roman, serif" font-size="52" font-weight="700">Kariyer</text>
-  <text x="320" y="350" text-anchor="middle" fill="#ffffff" font-family="Times New Roman, serif" font-size="52" font-weight="700">Günleri</text>
-  <text x="320" y="430" text-anchor="middle" fill="#f4c27a" font-family="Times New Roman, serif" font-size="40">2026</text>
-  <line x1="180" y1="480" x2="460" y2="480" stroke="#f8e7d8" stroke-width="2"/>
-  <text x="320" y="560" text-anchor="middle" fill="#f8e7d8" font-family="Times New Roman, serif" font-size="24">12 Ekim · 14:00</text>
-  <text x="320" y="610" text-anchor="middle" fill="#f8e7d8" font-family="Times New Roman, serif" font-size="22">A Blok Konferans Salonu</text>
-  <text x="320" y="710" text-anchor="middle" fill="#f4c27a" font-family="Times New Roman, serif" font-size="20">Kampüs Etkinlikleri</text>
+  <text x="320" y="140" text-anchor="middle" fill="#f8e7d8" font-family="Times New Roman, serif" font-size="28" letter-spacing="6">SEM&#304;NER &amp; FUAR</text>
+  
+  <!-- Kariyer & Mezuniyet Simgesi -->
+  <polygon points="320,210 390,240 320,270 250,240" fill="#f4c27a"/>
+  <path d="M 270 255 V 295 C 270 315 370 315 370 295 V 255" fill="none" stroke="#f4c27a" stroke-width="4"/>
+  <path d="M 390 240 V 290" stroke="#f8e7d8" stroke-width="3"/>
+  <circle cx="390" cy="295" r="5" fill="#f8e7d8"/>
+
+  <text x="320" y="370" text-anchor="middle" fill="#ffffff" font-family="Times New Roman, serif" font-size="52" font-weight="700">Kariyer G&#252;nleri</text>
+  <text x="320" y="440" text-anchor="middle" fill="#f4c27a" font-family="Times New Roman, serif" font-size="46" font-weight="700">2026</text>
+  <text x="320" y="500" text-anchor="middle" fill="#f8e7d8" font-family="Times New Roman, serif" font-size="28">Mezunlar &amp; &#350;irketler Bulu&#351;mas&#305;</text>
+  <line x1="180" y1="540" x2="460" y2="540" stroke="#f8e7d8" stroke-width="2"/>
+  <text x="320" y="600" text-anchor="middle" fill="#f8e7d8" font-family="Times New Roman, serif" font-size="24">12 Ekim &#8226; 14:00</text>
+  <text x="320" y="650" text-anchor="middle" fill="#f8e7d8" font-family="Times New Roman, serif" font-size="22">A Blok Konferans Salonu</text>
+  <text x="320" y="720" text-anchor="middle" fill="#f4c27a" font-family="Times New Roman, serif" font-size="20">Kamp&#252;s Etkinlikleri</text>
 </svg>
