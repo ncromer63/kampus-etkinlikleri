@@ -1,36 +1,49 @@
 https://kampus-etkinlikleri-seven.vercel.app/
 
-# Kampüs Etkinlikleri — Sprint 4
+# Kampüs Etkinlikleri — Sprint 5
 
-Bu depo, Üniversite Kampüs Etkinlikleri web uygulamasının Sprint 1–4 geliştirme adımlarını içerir. Sprint 4 ile birlikte uygulama Vite, TypeScript ve React mimarisine taşınmıştır.
+Bu depo, Üniversite Kampüs Etkinlikleri web uygulamasının Sprint 1–5 geliştirme adımlarını içerir. Sprint 5 ile birlikte monolithic (tek büyük dosya) React yapısı; bağımsız, props ve callback'lerle haberleşen modüler bileşenlere (components) ayrıştırılmıştır.
 
 ## Canlı Yayın Adresi
 - **Vercel Canlı Link:** https://kampus-etkinlikleri-seven.vercel.app/
 - **Vercel Yapılandırması:** Root Directory: `frontend`, Framework Preset: `Vite`
 
-## Adım 2 · Dosyaların Görevleri ve Açıklamaları
-- `frontend/package.json` — Proje adı, komutlar (dev, build), paket listesi.
-- `frontend/package-lock.json` — Yüklenen paketlerin tam sürümleri.
-- `frontend/node_modules/` — İndirilen paketler; GitHub'a gitmez.
-- `frontend/tsconfig*.json` — TypeScript ayarları.
-- `frontend/vite.config.ts` — Vite ayarları, React eklentisi.
-- `frontend/index.html` — Tek HTML; içinde boş div#root.
-- `frontend/src/main.tsx` — React'i başlatır, App'i root'a çizer.
-- `frontend/src/App.tsx` — Uygulamanın ana bileşeni (5 sayfa, state ile geçiş, filtreleme).
-- `frontend/src/App.css` — App'in stilleri; Sprint 3 CSS'i buraya (öğrenci no: 2416501085).
-- `frontend/src/index.css` — Tüm sayfaya genel stil; bu sprintte boş.
-- `frontend/public/` — Olduğu gibi kopyalanan dosyalar (afiş ve favicon).
+## Klasör Yapısı ve Dosyaların Görevleri
 
-### Ek Sprint 4 Kaynak Dosyaları
-- `frontend/src/types/campus-event.ts` — Etkinlik ve kategori tipleri (`CampusEvent`, `Category`).
-- `frontend/src/data/events.ts` — Tipli 6 adet etkinlik kaydı (`CampusEvent[]`).
-- `frontend/src/utils/filter-events.ts` — Arama, filtreleme ve bulma saf fonksiyonları (`searchEvents`, `filterByCategory`, `findEventById`).
+```text
+frontend/src/
+├── components/
+│   ├── layout/
+│   │   ├── Header.tsx         # Başlık ve isteğe bağlı alt yazı çerçeve bileşeni (HeaderProps)
+│   │   ├── Navigation.tsx     # Sayfa menüsü ve gezinme butonları (NavigationProps + callback)
+│   │   └── Footer.tsx         # Öğrenci künyesini barındıran alt bilgi bileşeni
+│   ├── events/
+│   │   ├── EventCard.tsx      # Tek bir etkinlik kartının görselleştirilmesi (EventCardProps)
+│   │   ├── EventList.tsx      # Etkinlik dizisini dönüp EventCard'ları listeleyen ortak bileşen
+│   │   ├── EventFilter.tsx    # Arama kutusu ve kategori seçim formu (Lifting state + 2 callback)
+│   │   └── EventDetail.tsx    # Tekil etkinliğin afiş, künye ve açıklama detay bloğu
+│   └── forms/
+│       └── EventForm.tsx      # Ekle ve Güncelle sayfalarında kullanılan ortak form bileşeni
+├── data/
+│   └── events.ts              # 6 adet tipli etkinlik mock verisi
+├── types/
+│   ├── campus-event.ts        # CampusEvent ve Category tipleri
+│   └── page.ts                # PageName sayfa rotalandırma union tipi
+├── utils/
+│   ├── filter-events.ts       # Arama, kategori filtreleme ve ID ile bulma saf fonksiyonları
+│   └── format-date.ts         # Türkçe tarih formatlama yardımcı fonksiyonu
+├── App.css                    # Uygulamanın stilleri (Öğrenci No: 2416501085, ton: 5, Times New Roman)
+├── App.tsx                    # Ana orkestrasyon bileşeni (State yönetimi, sayfa geçişleri)
+├── index.css                  # Genel CSS sıfırlama dosyası
+└── main.tsx                   # React uygulamasını başlatan kök dosya
+```
 
 ## Sprint Özeti
-1. **Sprint 1 (HTML, Git ve Yayına Alma):** Semantik HTML iskeleti, 5 sayfa, erişilebilir formlar (`sprint-01`).
+1. **Sprint 1 (HTML, Git ve Yayına Alma):** Semantik HTML5 iskeleti, 5 sayfa, erişilebilir formlar (`sprint-01`).
 2. **Sprint 2 (CSS ve Responsive Tasarım):** Numaraya göre CSS değişkenleri (`--ton: 5`, `--font: "Times New Roman"`), grid kart düzeni, responsive tasarım (`sprint-02`).
 3. **Sprint 3 (JavaScript ve DOM):** Modüler ES yapısı, anlık arama + kategori filtreleme, URLSearchParams ile detay sayfası (`sprint-03`).
 4. **Sprint 4 (Vite, TypeScript ve React):** `frontend/` içinde React-TS projesi, tipli veri, saf fonksiyonlar, tek bileşende 5 sayfa (`useState` + `useEffect`), `npm run build` ile hatasız üretim (`sprint-04`).
+5. **Sprint 5 (React Bileşenleri & Modüler Mimari):** Tek büyük `App.tsx`'in 8 ayrı bileşene bölünmesi (`layout`, `events`, `forms`), `interface` ile tiplendirilmiş props & callback mimarisi, lifting state kuralı ve birebir korunan görsel tasarım (`sprint-05`).
 
 ## Öğrenci Bilgileri
 - **Ad Soyad:** Ömer Nacar
