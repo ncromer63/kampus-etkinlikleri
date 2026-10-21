@@ -52,7 +52,7 @@ body,
 header {
   background: linear-gradient(135deg, var(--renk-ana) 0%, hsl(var(--ton) 75% 28%) 100%);
   color: #ffffff;
-  padding: calc(var(--bosluk-m) * 1.75) var(--bosluk-m) var(--bosluk-m) var(--bosluk-m);
+  padding: calc(var(--bosluk-m) * 1.75) var(--bosluk-m) 0.5rem var(--bosluk-m);
   text-align: left;
 }
 
@@ -71,11 +71,22 @@ header h1 {
 header p.subtitle {
   font-size: 0.95rem;
   opacity: 0.9;
-  margin-bottom: var(--bosluk-m);
+  margin-bottom: 0.5rem;
   color: #ffffff;
 }
 
+nav.menu {
+  background: linear-gradient(135deg, hsl(var(--ton) 72% 30%) 0%, hsl(var(--ton) 75% 28%) 100%);
+  padding: 0 var(--bosluk-m) calc(var(--bosluk-m) * 1.25) var(--bosluk-m);
+}
+
 nav {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+nav.menu .nav-container {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
