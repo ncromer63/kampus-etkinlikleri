@@ -4,8 +4,9 @@ https://kampus-etkinlikleri-seven.vercel.app/
 
 Bu depo, Üniversite Kampüs Etkinlikleri web uygulamasının Sprint 1–5 geliştirme adımlarını içerir. Sprint 5 ile birlikte monolithic (tek büyük dosya) React yapısı; bağımsız, props ve callback'lerle haberleşen modüler bileşenlere (components) ayrıştırılmıştır.
 
-## Canlı Yayın Adresi
+## Yayın ve Çalıştırma Adresleri
 - **Vercel Canlı Link:** https://kampus-etkinlikleri-seven.vercel.app/
+- **Yerel Geliştirme (Local):** http://localhost:5173/ (`cd frontend` ardından `npm run dev`)
 - **Vercel Yapılandırması:** Root Directory: `frontend`, Framework Preset: `Vite`
 
 ## Klasör Yapısı ve Dosyaların Görevleri

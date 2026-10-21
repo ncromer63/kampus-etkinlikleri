@@ -4,8 +4,9 @@ https://kampus-etkinlikleri-seven.vercel.app/
 
 Bu klasör, Vite + React + TypeScript mimarisiyle oluşturulmuş ve Sprint 5 kapsamında modüler bileşenlere (components) ayrıştırılmış Kampüs Etkinlikleri web arayüzünü içerir.
 
-## Canlı Yayın
+## Yayın ve Çalıştırma Adresleri
 - **Vercel Canlı Link:** https://kampus-etkinlikleri-seven.vercel.app/
+- **Yerel Geliştirme (Local):** http://localhost:5173/ (`npm run dev`)
 - **Vercel Ayarı:** Root Directory: `frontend`, Framework Preset: `Vite`
 
 ## Dosyalar ve Görevleri
