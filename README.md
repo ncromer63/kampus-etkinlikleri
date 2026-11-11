@@ -45,6 +45,7 @@ frontend/src/
 3. **Sprint 3 (JavaScript ve DOM):** Modüler ES yapısı, anlık arama + kategori filtreleme, URLSearchParams ile detay sayfası (`sprint-03`).
 4. **Sprint 4 (Vite, TypeScript ve React):** `frontend/` içinde React-TS projesi, tipli veri, saf fonksiyonlar, tek bileşende 5 sayfa (`useState` + `useEffect`), `npm run build` ile hatasız üretim (`sprint-04`).
 5. **Sprint 5 (React Bileşenleri & Modüler Mimari):** Tek büyük `App.tsx`'in 8 ayrı bileşene bölünmesi (`layout`, `events`, `forms`), `interface` ile tiplendirilmiş props & callback mimarisi, lifting state kuralı ve birebir korunan görsel tasarım (`sprint-05`).
+6. **Sprint 7 (Node.js & Express REST API):** `backend/` dizininde modüler Express REST API mimarisi (`app.js`, `server.js`, `routes`, `controllers`, `data`), GET /health (öğrenci no kontrolü), GET /events (kategori filtreleme), GET /events/:id, POST /events rotaları, bellek içi veri yönetimi, CORS ve REST API sözleşmesi (`sprint-07`).
 
 ## Öğrenci Bilgileri
 - **Ad Soyad:** Ömer Nacar
