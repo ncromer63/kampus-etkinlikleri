@@ -21,7 +21,8 @@ export const getEventById = (req, res) => {
 };
 
 export const createEvent = (req, res) => {
-  const { title, category, date, time, location, description, capacity } = req.body;
+  const body = req.body || {};
+  const { title, category, date, time, location, description, capacity } = body;
 
   if (!title || !category || !date) {
     return res.status(400).json({

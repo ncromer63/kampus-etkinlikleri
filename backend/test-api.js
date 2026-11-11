@@ -99,6 +99,34 @@ async function runTests() {
         `error message is 'title, category and date are required' (actual: ${data6.error?.message})`
       );
 
+      // Test 7: POST /events (Tamamen gövdesiz - body yok)
+      console.log('\n--- 7. POST /events (tamamen gövdesiz) ---');
+      const res7 = await fetch(`${baseUrl}/events`, {
+        method: 'POST',
+      });
+      assert(res7.status === 400, `Status code is 400 for bodiless POST (actual: ${res7.status})`);
+      const data7 = await res7.json();
+      console.log('Response body:', JSON.stringify(data7, null, 2));
+      assert(
+        data7.error && data7.error.message === 'title, category and date are required',
+        `error message is 'title, category and date are required' (actual: ${data7.error?.message})`
+      );
+
+      // Test 8: POST /events (Boş JSON {})
+      console.log('\n--- 8. POST /events (boş JSON {}) ---');
+      const res8 = await fetch(`${baseUrl}/events`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: '{}',
+      });
+      assert(res8.status === 400, `Status code is 400 for empty JSON (actual: ${res8.status})`);
+      const data8 = await res8.json();
+      console.log('Response body:', JSON.stringify(data8, null, 2));
+      assert(
+        data8.error && data8.error.message === 'title, category and date are required',
+        `error message is 'title, category and date are required' (actual: ${data8.error?.message})`
+      );
+
       console.log(`\n========================================`);
       console.log(`RESULTS: ${passed} PASSED, ${failed} FAILED`);
       console.log(`========================================\n`);

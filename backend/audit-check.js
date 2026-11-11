@@ -38,7 +38,9 @@ let trackedModules = '';
 try {
   trackedEnv = execSync('git ls-files .env src/.env', { encoding: 'utf8' }).trim();
   trackedModules = execSync('git ls-files node_modules', { encoding: 'utf8' }).trim();
-} catch (e) {}
+} catch (e) {
+  allPassed = false;
+}
 check(4, '.env ve node_modules GitHub takip dışı', trackedEnv === '' && trackedModules === '', '.gitignore kuralları ile git takibinden engellendi');
 
 // 5. Route ve controller ayrı dosyalarda
@@ -65,7 +67,9 @@ let commitLines = [];
 try {
   const logOutput = execSync('git log --oneline -n 15', { encoding: 'utf8' }).trim();
   commitLines = logOutput.split('\n');
-} catch (e) {}
+} catch (e) {
+  allPassed = false;
+}
 check(11, 'En az 5 commit, adım adım atılmış', commitLines.length >= 5, `Toplam ${commitLines.length} commit mevcut`);
 
 // 12. data/events.js'te frontend'den birebir taşınan 6 etkinlik
@@ -97,6 +101,7 @@ const server = app.listen(PORT, async () => {
     check(7, 'GET /events ve GET /events/:id çalışıyor; olmayan id 404', m7, `Liste: 200 (${dataEvents.length} kayıt), Detay: 200, Olmayan: 404 Not Found`);
 
     // 8. POST /events 201; eksik veri 400
+    // 8.a: Tam veri (201 Created)
     const resPostOk = await fetch(`${baseUrl}/events`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -108,14 +113,36 @@ const server = app.listen(PORT, async () => {
       })
     });
     const dataPostOk = await resPostOk.json();
-    const resPostErr = await fetch(`${baseUrl}/events`, {
+
+    // 8.b: Sadece title (400 Bad Request - Fotoğraftaki Adım 9 senaryosu)
+    const resPostOnlyTitle = await fetch(`${baseUrl}/events`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title: 'Sadece Başlık' })
     });
-    const dataPostErr = await resPostErr.json();
-    const m8 = resPostOk.status === 201 && dataPostOk.id && resPostErr.status === 400 && dataPostErr.error;
-    check(8, 'POST /events 201; eksik veri 400', m8, `Tam veri: 201 Created (id: ${dataPostOk.id}), Eksik veri: 400 Bad Request`);
+    const dataPostOnlyTitle = await resPostOnlyTitle.json();
+
+    // 8.c: Tamamen gövdesiz POST (body yok - uç durum kontrolü)
+    const resPostNoBody = await fetch(`${baseUrl}/events`, {
+      method: 'POST',
+    });
+    const dataPostNoBody = await resPostNoBody.json();
+
+    // 8.d: Boş JSON {} POST (uç durum kontrolü)
+    const resPostEmptyJson = await fetch(`${baseUrl}/events`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: '{}'
+    });
+    const dataPostEmptyJson = await resPostEmptyJson.json();
+
+    const m8Ok = resPostOk.status === 201 && dataPostOk.id;
+    const m8Title = resPostOnlyTitle.status === 400 && dataPostOnlyTitle.error;
+    const m8NoBody = resPostNoBody.status === 400 && dataPostNoBody.error;
+    const m8EmptyJson = resPostEmptyJson.status === 400 && dataPostEmptyJson.error;
+    const m8 = m8Ok && m8Title && m8NoBody && m8EmptyJson;
+
+    check(8, 'POST /events 201; eksik veya gövdesiz veri 400', m8, `Tam: 201, Sadece title: 400, Gövdesiz: 400, Boş JSON: 400`);
 
     console.log('\n====================================================');
     if (allPassed) {
@@ -125,10 +152,10 @@ const server = app.listen(PORT, async () => {
     }
     console.log('====================================================\n');
   } catch (err) {
-    console.error('Test hatası:', err);
+    console.error('❌ Test sırasında beklenmeyen istisna yakalandı:', err);
+    allPassed = false;
   } finally {
     server.close();
     process.exit(allPassed ? 0 : 1);
   }
 });
-
