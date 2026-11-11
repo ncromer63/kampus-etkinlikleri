@@ -110,3 +110,22 @@ Varsayılan port `3000`'dir.
 }
 ```
 - **Başarılı Yanıt (201 Created):** Oluşturulan yeni etkinlik nesnesi döner.
+
+---
+
+## 🧪 Postman & Test İstekleri
+
+Projede yer alan `requests/kampus-api.json` dosyası Postman Collection v2.1.0 formatındadır. Postman veya benzeri API istemcilerine doğrudan içe aktarılabilir.
+
+### Koleksiyondaki 6 İstek:
+1. `GET {{baseUrl}}/health` — Status: `200 OK` (Sağlık kontrolü ve öğrenci no)
+2. `GET {{baseUrl}}/events` — Status: `200 OK` (Tüm etkinlikler)
+3. `GET {{baseUrl}}/events/event-2` — Status: `200 OK` (Mevcut etkinlik detayı)
+4. `GET {{baseUrl}}/events/yok` — Status: `404 Not Found` (Bulunamayan etkinlik)
+5. `POST {{baseUrl}}/events` — Status: `201 Created` (Tam body ile yeni etkinlik)
+6. `POST {{baseUrl}}/events` — Status: `400 Bad Request` (Sadece title ile eksik veri)
+
+### Otomatik Testleri Çalıştırma:
+```bash
+npm test
+```

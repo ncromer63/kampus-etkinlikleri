@@ -1,0 +1,155 @@
+{
+  "info": {
+    "_postman_id": "c1f7a0b3-9e42-4981-b5e1-8890cb5a918a",
+    "name": "Kampüs Etkinlikleri REST API",
+    "description": "Sprint 7 Express REST API test koleksiyonu (6 istek)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. GET /health (Status 200)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "health"
+          ]
+        },
+        "description": "Servis sağlık kontrolü ve öğrenci numarası doğrulaması (Status 200 OK)"
+      },
+      "response": []
+    },
+    {
+      "name": "2. GET /events (Status 200)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/events",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "events"
+          ]
+        },
+        "description": "Tüm etkinlikleri listeleme (Status 200 OK)"
+      },
+      "response": []
+    },
+    {
+      "name": "3. GET /events/event-2 (Status 200)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/events/event-2",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "events",
+            "event-2"
+          ]
+        },
+        "description": "Belirli bir etkinliğin detayını getirme (Status 200 OK)"
+      },
+      "response": []
+    },
+    {
+      "name": "4. GET /events/yok (Status 404)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/events/yok",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "events",
+            "yok"
+          ]
+        },
+        "description": "Bulunamayan etkinlik için 404 Not Found kontrolü (Status 404)"
+      },
+      "response": []
+    },
+    {
+      "name": "5. POST /events (Tam body) (Status 201)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Açık Kaynak Hackathonu\",\n  \"category\": \"Yarışma\",\n  \"date\": \"2026-11-25\",\n  \"time\": \"09:00\",\n  \"location\": \"Mühendislik Fakültesi\",\n  \"description\": \"24 saatlik açık kaynak kod maratonu.\",\n  \"capacity\": 100\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/events",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "events"
+          ]
+        },
+        "description": "Tam body ile yeni etkinlik oluşturma (Status 201 Created)"
+      },
+      "response": []
+    },
+    {
+      "name": "6. POST /events (Sadece title) (Status 400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Eksik Etkinlik\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/events",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "events"
+          ]
+        },
+        "description": "Sadece title ile eksik veri gönderimi doğrulaması (Status 400 Bad Request)"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}
