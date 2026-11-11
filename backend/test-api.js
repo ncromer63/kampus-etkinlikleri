@@ -46,7 +46,7 @@ async function runTests() {
       const data3 = await res3.json();
       console.log('Response body:', JSON.stringify(data3, null, 2));
       assert(data3.id === 'event-2', `id is 'event-2' (actual: ${data3.id})`);
-      assert(data3.title === 'Gömülü Sistemler ve IoT Proje Atölyesi', `title is 'Gömülü Sistemler ve IoT Proje Atölyesi' (actual: ${data3.title})`);
+      assert(data3.title === 'Robotik Atölyesi', `title is 'Robotik Atölyesi' (actual: ${data3.title})`);
       assert(data3.category === 'Atölye', `category is 'Atölye' (actual: ${data3.category})`);
 
       // Test 4: GET /events/yok

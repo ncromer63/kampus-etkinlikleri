@@ -30,16 +30,18 @@ Varsayılan port `3000`'dir.
 
 ## 📋 REST API Sözleşmesi
 
-| Metot | Endpoint | Açıklama | İstek Gövdesi (Body) / Query | Başarılı Durum Kodu | Hata Kodları |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **GET** | `/health` | Servis sağlık kontrolü ve öğrenci numarası | - | `200 OK` | `500 Internal Server Error` |
-| **GET** | `/events` | Tüm etkinlikleri listeler veya kategoriye göre filtreler | Query: `?category=Atölye` (opsiyonel) | `200 OK` | `500 Internal Server Error` |
-| **GET** | `/events/:id` | Belirtilen ID'ye sahip etkinliğin detayını getirir | - | `200 OK` | `404 Not Found` |
-| **POST** | `/events` | Yeni etkinlik oluşturur | JSON (title*, category*, date*, time, location, description, capacity) | `201 Created` | `400 Bad Request` |
-| **PATCH** | `/events/:id` | Etkinlik bilgilerini kısmi olarak günceller | JSON (güncellenecek alanlar) | `200 OK` | `400 Bad Request`, `404 Not Found` |
-| **DELETE** | `/events/:id` | Etkinliği siler | - | `200 OK` veya `204 No Content` | `404 Not Found` |
+| Metot | Endpoint | Amaç / Açıklama | İstek Gövdesi (Body) / Query | Başarılı | Hata | Durum |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **GET** | `/health` | Sağlık kontrolü ve öğrenci no | - | `200` | - | **Bu sprint (Sprint 7)** |
+| **GET** | `/events` | Etkinlik listesini getirir (kategori filtreli veya tümü) | Query: `?category=Atölye` (opsiyonel) | `200` | - | **Bu sprint (Sprint 7)** |
+| **GET** | `/events/:id` | Tek etkinlik detayını getirir | - | `200` | `404` | **Bu sprint (Sprint 7)** |
+| **POST** | `/events` | Yeni etkinlik kaydeder | JSON (`title`\*, `category`\*, `date`\*, `time`, `location`, `description`, `capacity`) | `201` | `400` | **Bu sprint (Sprint 7)** |
+| **PATCH** | `/events/:id` | Etkinlik bilgilerini günceller | JSON (güncellenecek alanlar) | `200` | `400`, `404` | **Sprint 9** (Uygulanmayacak) |
+| **DELETE** | `/events/:id` | Etkinliği siler | - | `204` | `404` | **Sprint 9** (Uygulanmayacak) |
 
 \* ile işaretli alanlar zorunludur.
+
+> ⚠️ **Önemli Not:** `PATCH /events/:id` ve `DELETE /events/:id` işlemleri **Sprint 9** kapsamında uygulanacaktır. Bu sprintte (Sprint 7) yalnızca GET ve POST rotaları aktiftir.
 
 ---
 
@@ -58,7 +60,7 @@ Varsayılan port `3000`'dir.
 ### 2. Etkinlikleri Listeleme & Filtreleme
 - **URL:** `GET /events`
 - **Filtreli URL:** `GET /events?category=Atölye`
-- **Başarılı Yanıt (200 OK):**
+- **Başarılı Yanıt (200 OK) [Mevcut Backend Verisi]:**
 ```json
 [
   {
@@ -70,14 +72,36 @@ Varsayılan port `3000`'dir.
     "location": "A Blok Konferans Salonu",
     "description": "Mezunlarla kariyer söyleşileri ve şirket standları.",
     "capacity": 120
+  },
+  {
+    "id": "event-2",
+    "title": "Robotik Atölyesi",
+    "category": "Atölye",
+    "date": "2026-10-20",
+    "time": "10:00",
+    "location": "Bilgisayar Laboratuvarı 2",
+    "description": "Arduino ile çizgi izleyen robot yapımı, başlangıç seviyesi.",
+    "capacity": 20
   }
 ]
 ```
 
 ### 3. Etkinlik Detayı
-- **URL:** `GET /events/:id`
-- **Başarılı Yanıt (200 OK):** Belirtilen etkinliğin nesnesi döner.
-- **Bulunamadı Yanıtı (404 Not Found):**
+- **URL:** `GET /events/event-2`
+- **Başarılı Yanıt (200 OK) [Mevcut Backend Verisi]:**
+```json
+{
+  "id": "event-2",
+  "title": "Robotik Atölyesi",
+  "category": "Atölye",
+  "date": "2026-10-20",
+  "time": "10:00",
+  "location": "Bilgisayar Laboratuvarı 2",
+  "description": "Arduino ile çizgi izleyen robot yapımı, başlangıç seviyesi.",
+  "capacity": 20
+}
+```
+- **Bulunamadı Yanıtı (404 Not Found - Örn. `GET /events/yok`):**
 ```json
 {
   "error": {
@@ -109,7 +133,19 @@ Varsayılan port `3000`'dir.
   }
 }
 ```
-- **Başarılı Yanıt (201 Created):** Oluşturulan yeni etkinlik nesnesi döner.
+- **Başarılı Yanıt (201 Created):**
+```json
+{
+  "id": "event-1794383373195",
+  "title": "Açık Kaynak Hackathonu",
+  "category": "Yarışma",
+  "date": "2026-11-25",
+  "time": "09:00",
+  "location": "Mühendislik Fakültesi",
+  "description": "24 saatlik açık kaynak kod maratonu.",
+  "capacity": 100
+}
+```
 
 ---
 
@@ -119,9 +155,9 @@ Projede yer alan `requests/kampus-api.json` dosyası Postman Collection v2.1.0 f
 
 ### Koleksiyondaki 6 İstek:
 1. `GET {{baseUrl}}/health` — Status: `200 OK` (Sağlık kontrolü ve öğrenci no)
-2. `GET {{baseUrl}}/events` — Status: `200 OK` (Tüm etkinlikler)
-3. `GET {{baseUrl}}/events/event-2` — Status: `200 OK` (Mevcut etkinlik detayı)
-4. `GET {{baseUrl}}/events/yok` — Status: `404 Not Found` (Bulunamayan etkinlik)
+2. `GET {{baseUrl}}/events` — Status: `200 OK` (Tüm etkinlikler - 6 kayıt)
+3. `GET {{baseUrl}}/events/event-2` — Status: `200 OK` (Robotik Atölyesi detayı)
+4. `GET {{baseUrl}}/events/yok` — Status: `404 Not Found` (Bulunamayan etkinlik: Event not found)
 5. `POST {{baseUrl}}/events` — Status: `201 Created` (Tam body ile yeni etkinlik)
 6. `POST {{baseUrl}}/events` — Status: `400 Bad Request` (Sadece title ile eksik veri)
 

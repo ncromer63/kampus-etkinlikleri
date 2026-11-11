@@ -68,11 +68,11 @@ try {
 } catch (e) {}
 check(11, 'En az 5 commit, adım adım atılmış', commitLines.length >= 5, `Toplam ${commitLines.length} commit mevcut`);
 
-// 12. data/events.js'te kendi 6 etkinliğin
+// 12. data/events.js'te frontend'den birebir taşınan 6 etkinlik
 import { events } from './src/data/events.js';
 const has6Events = Array.isArray(events) && events.length === 6;
-const isCustom = events.some(e => e.id === 'event-2' && e.title.includes('Gömülü'));
-check(12, 'data/events.js\'te kendi 6 etkinliğin', has6Events && isCustom, `Ömer Nacar'a özel benzersiz 6 etkinlik yüklü (ilk: ${events[0].title})`);
+const isMatchingFrontend = events.some(e => e.id === 'event-2' && e.title === 'Robotik Atölyesi') && events.some(e => e.id === 'event-1' && e.title === 'Kariyer Günleri 2026');
+check(12, 'data/events.js\'te frontend\'den birebir taşınan 6 etkinlik (Adım 6)', has6Events && isMatchingFrontend, `Frontend ile birebir uyumlu 6 etkinlik yüklü (event-1: ${events[0].title}, event-2: ${events[1].title})`);
 
 // 6, 7, 8: API HTTP Endpoint Testleri
 console.log('\n--- Canlı Endpoint Testleri (Maddeler 6, 7, 8) ---');
@@ -131,3 +131,4 @@ const server = app.listen(PORT, async () => {
     process.exit(allPassed ? 0 : 1);
   }
 });
+
