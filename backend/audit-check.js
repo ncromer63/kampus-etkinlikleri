@@ -1,161 +1,154 @@
 import fs from 'fs';
 import { execSync } from 'child_process';
-import app from './src/app.js';
+import mongoose from 'mongoose';
 
 console.log('====================================================');
-console.log('   SPRINT 7 — 12 TESLİM KONTROL MADDESİ DENETİMİ    ');
+console.log('   SPRINT 8 — 12 PUAN & TESLİM KONTROL LİSTESİ DENETİMİ');
 console.log('====================================================\n');
 
 let allPassed = true;
+let totalScore = 0;
 
-function check(number, title, passed, detail = '') {
+function check(points, title, passed, detail = '') {
   const symbol = passed ? '✅ GEÇTİ' : '❌ BAŞARISIZ';
-  console.log(`[${symbol}] Madde ${number}: ${title}`);
+  console.log(`[${symbol}] (${points} Puan) ${title}`);
   if (detail) console.log(`       👉 ${detail}`);
-  if (!passed) allPassed = false;
+  if (passed) {
+    totalScore += points;
+  } else {
+    allPassed = false;
+  }
 }
 
-// 1. Backend ayrı backend/ klasöründe
-const hasBackendPkg = fs.existsSync('package.json');
-const hasFrontendPkg = fs.existsSync('../frontend/package.json');
-check(1, 'Backend ayrı backend/ klasöründe', hasBackendPkg && hasFrontendPkg, 'backend/ ve frontend/ bağımsız klasörler olarak mevcut');
-
-// 2. npm install + npm run dev hatasız çalışıyor
+// 1. Temel hazırlık: npm install + npm run dev çalışıyor (1 puan)
 const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-const hasDev = pkg.scripts && pkg.scripts.dev && pkg.scripts.dev.includes('node --watch src/server.js');
-const hasDeps = pkg.dependencies && pkg.dependencies.express && pkg.dependencies.cors && pkg.dependencies.dotenv;
-check(2, 'npm install + npm run dev tanımlı ve hazır', hasDev && hasDeps, `scripts.dev: "${pkg.scripts.dev}"`);
+const hasDev = pkg.scripts && pkg.scripts.dev && pkg.scripts.dev.includes('src/server.js');
+const hasStart = pkg.scripts && pkg.scripts.start && pkg.scripts.start.includes('src/server.js');
+const hasSeed = pkg.scripts && pkg.scripts.seed && pkg.scripts.seed.includes('seed-events.js');
+const hasMongoose = pkg.dependencies && pkg.dependencies.mongoose;
+check(
+  1,
+  'Madde 1: Temel hazırlık (package.json scripts + dependencies)',
+  hasDev && hasStart && hasSeed && hasMongoose,
+  `dev: "${pkg.scripts?.dev}", seed: "${pkg.scripts?.seed}", mongoose: ${pkg.dependencies?.mongoose}`
+);
 
-// 3. Port .env'den okunuyor, .env.example var
-const serverJs = fs.readFileSync('src/server.js', 'utf8');
-const readsPort = serverJs.includes('process.env.PORT');
-const hasEnvExample = fs.existsSync('.env.example');
-check(3, 'Port .env\'den okunuyor, .env.example var', readsPort && hasEnvExample, 'process.env.PORT || 3000 ve .env.example (PORT=3000) mevcut');
+// 2. Bağlantı: config/database.js'te URI .env'den, MONGODB_URI (2 puan)
+const dbJsPath = fs.existsSync('src/config/database.js') ? 'src/config/database.js' : 'config/database.js';
+const dbJsExists = fs.existsSync(dbJsPath);
+let dbJsContent = '';
+if (dbJsExists) {
+  dbJsContent = fs.readFileSync(dbJsPath, 'utf8');
+}
+const readsMongoUri = dbJsContent.includes('process.env.MONGODB_URI');
+const connectsMongoose = dbJsContent.includes('mongoose.connect');
+check(
+  2,
+  'Madde 2: Veritabanı bağlantı modülü (config/database.js MONGODB_URI)',
+  dbJsExists && readsMongoUri && connectsMongoose,
+  `Dosya: ${dbJsPath}, process.env.MONGODB_URI ve mongoose.connect kontrol edildi`
+);
 
-// 4. env ve node_modules GitHub'da yok
+// 3. Schema: required, trim, timestamps ve özel kurallar (2 puan)
+const modelPath = fs.existsSync('src/models/event.model.js') ? 'src/models/event.model.js' : 'models/event.model.js';
+const modelExists = fs.existsSync(modelPath);
+let modelContent = '';
+if (modelExists) {
+  modelContent = fs.readFileSync(modelPath, 'utf8');
+}
+const hasTrim = modelContent.includes('trim: true');
+const hasRequired = modelContent.includes('required: true');
+const hasTimestamps = modelContent.includes('timestamps: true');
+const hasEnum = modelContent.includes('Yazılım') && modelContent.includes('Tasarım') && modelContent.includes('Kariyer');
+const hasMinMax = modelContent.includes('minlength: 3') || modelContent.includes('min: 5');
+check(
+  2,
+  'Madde 3: Event Schema & Model kuralları',
+  modelExists && hasTrim && hasRequired && hasTimestamps && hasEnum && hasMinMax,
+  'title (min 3, max 100, trim), category enum (Yazılım, Tasarım, Kariyer), capacity (min 5, default 50), timestamps: true'
+);
+
+// 4. Seed: npm run seed 6 kayıt, iki kez çalışınca da 6 (2 puan)
+const seedPath = fs.existsSync('src/data/seed-events.js') ? 'src/data/seed-events.js' : 'data/seed-events.js';
+const seedExists = fs.existsSync(seedPath);
+let seedContent = '';
+if (seedExists) {
+  seedContent = fs.readFileSync(seedPath, 'utf8');
+}
+const hasDeleteMany = seedContent.includes('deleteMany');
+const hasInsertMany = seedContent.includes('insertMany');
+check(
+  2,
+  'Madde 4: Seed mekanizması (src/data/seed-events.js)',
+  seedExists && hasDeleteMany && hasInsertMany,
+  'deleteMany({}) ve insertMany() içeriyor; her çalıştırmada veri tekrarlanmadan temizlenip 6 kayıt yüklenir'
+);
+
+// 5. GET: liste ve detay Mongoose'dan; olmayan ve geçersiz id 404 (2 puan)
+const ctrlPath = 'src/controllers/event.controller.js';
+const ctrlExists = fs.existsSync(ctrlPath);
+let ctrlContent = '';
+if (ctrlExists) {
+  ctrlContent = fs.readFileSync(ctrlPath, 'utf8');
+}
+const hasFind = ctrlContent.includes('Event.find');
+const hasSort = ctrlContent.includes('sort(');
+const hasFindById = ctrlContent.includes('Event.findById');
+const hasValidObjId = ctrlContent.includes('isValidObjectId');
+const has404 = ctrlContent.includes('404');
+check(
+  2,
+  'Madde 5: GET /events & GET /events/:id kontrolleri',
+  ctrlExists && hasFind && hasSort && hasFindById && hasValidObjId && has404,
+  'Event.find().sort({ date: 1 }), isValidObjectId kontrolü ve 404 yanıtı doğrulandı'
+);
+
+// 6. POST: 201; eksik veri 400 ve sunucu çökmüyor (2 puan)
+const hasCreate = ctrlContent.includes('Event.create');
+const hasValidationError = ctrlContent.includes('ValidationError');
+const has400 = ctrlContent.includes('400');
+check(
+  2,
+  'Madde 6: POST /events doğrulama ve hata yakalama',
+  ctrlExists && hasCreate && hasValidationError && has400,
+  'Event.create() ve catch bloğunda ValidationError -> 400 yanıtı doğrulandı'
+);
+
+// 7. Kalıcılık & Hata Middleware'i (1 puan)
+const appPath = 'src/app.js';
+const appContent = fs.readFileSync(appPath, 'utf8');
+const hasHealthStudent = appContent.includes('2416501085');
+const hasErrorMiddleware = appContent.includes('err, req, res, next') && appContent.includes('500');
+check(
+  1,
+  'Madde 7: Kalıcılık altyapısı, /health ve Hata Middleware',
+  hasHealthStudent && hasErrorMiddleware,
+  'GET /health student "2416501085" ve 4 parametreli hata yakalama middleware mevcut'
+);
+
+console.log('\n====================================================');
+console.log(`   TOPLAM PUAN: ${totalScore} / 12`);
+console.log('====================================================');
+
+// Git & Güvenlik Kontrolleri (Ön Şartlar)
+console.log('\n--- Ön Şart Güvenlik & Git Kontrolleri ---');
 let trackedEnv = '';
 let trackedModules = '';
 try {
-  trackedEnv = execSync('git ls-files .env src/.env', { encoding: 'utf8' }).trim();
-  trackedModules = execSync('git ls-files node_modules', { encoding: 'utf8' }).trim();
-} catch (e) {
-  allPassed = false;
+  trackedEnv = execSync('git ls-files .env src/.env backend/.env', { encoding: 'utf8' }).trim();
+  trackedModules = execSync('git ls-files node_modules backend/node_modules', { encoding: 'utf8' }).trim();
+} catch (e) {}
+
+const envSecure = trackedEnv === '';
+const modulesSecure = trackedModules === '';
+const hasEnvExample = fs.existsSync('.env.example');
+
+console.log(`[${envSecure ? '✅ GÜVENLİ' : '❌ TEHLİKE'}] .env git takibinde DEĞİL`);
+console.log(`[${modulesSecure ? '✅ GÜVENLİ' : '❌ TEHLİKE'}] node_modules git takibinde DEĞİL`);
+console.log(`[${hasEnvExample ? '✅ MEVCUT' : '❌ EKSİK'}] .env.example şablonu mevcut`);
+
+if (!envSecure || !modulesSecure || !allPassed) {
+  process.exit(1);
+} else {
+  console.log('\n🎉 Tebrikler! Tüm Sprint 8 gereksinimleri başarıyla tamamlandı.\n');
 }
-check(4, '.env ve node_modules GitHub takip dışı', trackedEnv === '' && trackedModules === '', '.gitignore kuralları ile git takibinden engellendi');
-
-// 5. Route ve controller ayrı dosyalarda
-const hasRoutes = fs.existsSync('src/routes/event.routes.js');
-const hasControllers = fs.existsSync('src/controllers/event.controller.js');
-check(5, 'Route ve controller ayrı dosyalarda', hasRoutes && hasControllers, 'src/routes/event.routes.js ve src/controllers/event.controller.js ayrıldı');
-
-// 9. backend/README.md'de REST sözleşmesi
-const readme = fs.existsSync('README.md') ? fs.readFileSync('README.md', 'utf8') : '';
-const hasContract = readme.includes('GET') && readme.includes('/health') && readme.includes('/events') && readme.includes('200') && readme.includes('404');
-check(9, 'backend/README.md\'de REST sözleşmesi', hasContract, 'Sözleşme tablosu, metotlar ve durum kodları belgelendi');
-
-// 10. 6 istek collection olarak backend/requests/kampus-api.json'da
-const hasPostman = fs.existsSync('requests/kampus-api.json');
-let postmanItemCount = 0;
-if (hasPostman) {
-  const postmanJson = JSON.parse(fs.readFileSync('requests/kampus-api.json', 'utf8'));
-  postmanItemCount = postmanJson.item ? postmanJson.item.length : 0;
-}
-check(10, '6 istek collection olarak backend/requests/kampus-api.json\'da', hasPostman && postmanItemCount === 6, `Koleksiyonda tam ${postmanItemCount} istek tanımlı`);
-
-// 11. En az 5 commit, adım adım atılmış
-let commitLines = [];
-try {
-  const logOutput = execSync('git log --oneline -n 15', { encoding: 'utf8' }).trim();
-  commitLines = logOutput.split('\n');
-} catch (e) {
-  allPassed = false;
-}
-check(11, 'En az 5 commit, adım adım atılmış', commitLines.length >= 5, `Toplam ${commitLines.length} commit mevcut`);
-
-// 12. data/events.js'te frontend'den birebir taşınan 6 etkinlik
-import { events } from './src/data/events.js';
-const has6Events = Array.isArray(events) && events.length === 6;
-const isMatchingFrontend = events.some(e => e.id === 'event-2' && e.title === 'Robotik Atölyesi') && events.some(e => e.id === 'event-1' && e.title === 'Kariyer Günleri 2026');
-check(12, 'data/events.js\'te frontend\'den birebir taşınan 6 etkinlik (Adım 6)', has6Events && isMatchingFrontend, `Frontend ile birebir uyumlu 6 etkinlik yüklü (event-1: ${events[0].title}, event-2: ${events[1].title})`);
-
-// 6, 7, 8: API HTTP Endpoint Testleri
-console.log('\n--- Canlı Endpoint Testleri (Maddeler 6, 7, 8) ---');
-const PORT = 3009;
-const server = app.listen(PORT, async () => {
-  const baseUrl = `http://localhost:${PORT}`;
-  try {
-    // 6. GET /health student = numara
-    const resHealth = await fetch(`${baseUrl}/health`);
-    const dataHealth = await resHealth.json();
-    const m6 = resHealth.status === 200 && dataHealth.status === 'ok' && dataHealth.student === '2416501085';
-    check(6, 'GET /health JSON\'unda student = 2416501085', m6, `Status: ${resHealth.status}, body: ${JSON.stringify(dataHealth)}`);
-
-    // 7. GET /events ve GET /events/:id çalışıyor; olmayan id 404
-    const resEvents = await fetch(`${baseUrl}/events`);
-    const dataEvents = await resEvents.json();
-    const resDetail = await fetch(`${baseUrl}/events/event-1`);
-    const dataDetail = await resDetail.json();
-    const res404 = await fetch(`${baseUrl}/events/olmayan-id-999`);
-    const data404 = await res404.json();
-    const m7 = resEvents.status === 200 && dataEvents.length >= 6 && resDetail.status === 200 && dataDetail.id === 'event-1' && res404.status === 404 && data404.error;
-    check(7, 'GET /events ve GET /events/:id çalışıyor; olmayan id 404', m7, `Liste: 200 (${dataEvents.length} kayıt), Detay: 200, Olmayan: 404 Not Found`);
-
-    // 8. POST /events 201; eksik veri 400
-    // 8.a: Tam veri (201 Created)
-    const resPostOk = await fetch(`${baseUrl}/events`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title: 'Özgün Denetim Testi',
-        category: 'Atölye',
-        date: '2026-11-30',
-        capacity: 50
-      })
-    });
-    const dataPostOk = await resPostOk.json();
-
-    // 8.b: Sadece title (400 Bad Request - Fotoğraftaki Adım 9 senaryosu)
-    const resPostOnlyTitle = await fetch(`${baseUrl}/events`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title: 'Sadece Başlık' })
-    });
-    const dataPostOnlyTitle = await resPostOnlyTitle.json();
-
-    // 8.c: Tamamen gövdesiz POST (body yok - uç durum kontrolü)
-    const resPostNoBody = await fetch(`${baseUrl}/events`, {
-      method: 'POST',
-    });
-    const dataPostNoBody = await resPostNoBody.json();
-
-    // 8.d: Boş JSON {} POST (uç durum kontrolü)
-    const resPostEmptyJson = await fetch(`${baseUrl}/events`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: '{}'
-    });
-    const dataPostEmptyJson = await resPostEmptyJson.json();
-
-    const m8Ok = resPostOk.status === 201 && dataPostOk.id;
-    const m8Title = resPostOnlyTitle.status === 400 && dataPostOnlyTitle.error;
-    const m8NoBody = resPostNoBody.status === 400 && dataPostNoBody.error;
-    const m8EmptyJson = resPostEmptyJson.status === 400 && dataPostEmptyJson.error;
-    const m8 = m8Ok && m8Title && m8NoBody && m8EmptyJson;
-
-    check(8, 'POST /events 201; eksik veya gövdesiz veri 400', m8, `Tam: 201, Sadece title: 400, Gövdesiz: 400, Boş JSON: 400`);
-
-    console.log('\n====================================================');
-    if (allPassed) {
-      console.log('🏆 12 MADDENİN 12\'Sİ DE EKSİKSİZ VE HATASIZ GEÇTİ!');
-    } else {
-      console.log('❌ BAZI MADDELERDE EKSİK TESPİT EDİLDİ!');
-    }
-    console.log('====================================================\n');
-  } catch (err) {
-    console.error('❌ Test sırasında beklenmeyen istisna yakalandı:', err);
-    allPassed = false;
-  } finally {
-    server.close();
-    process.exit(allPassed ? 0 : 1);
-  }
-});

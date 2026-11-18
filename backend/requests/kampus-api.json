@@ -1,8 +1,8 @@
 {
   "info": {
     "_postman_id": "c1f7a0b3-9e42-4981-b5e1-8890cb5a918a",
-    "name": "Kampüs Etkinlikleri REST API",
-    "description": "Sprint 7 Express REST API test koleksiyonu (6 istek)",
+    "name": "Kampüs Etkinlikleri REST API (Sprint 8)",
+    "description": "Sprint 8 Express & MongoDB REST API test koleksiyonu",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -20,7 +20,7 @@
             "health"
           ]
         },
-        "description": "Servis sağlık kontrolü ve öğrenci numarası doğrulaması (Status 200 OK)"
+        "description": "Sağlık kontrolü ve öğrenci numarası doğrulaması (Status 200 OK, student: 2416501085)"
       },
       "response": []
     },
@@ -38,50 +38,50 @@
             "events"
           ]
         },
-        "description": "Tüm etkinlikleri listeleme (Status 200 OK)"
+        "description": "Tüm etkinlikleri MongoDB'den listeleme (Status 200 OK, 6 adet)"
       },
       "response": []
     },
     {
-      "name": "3. GET /events/event-2 (Status 200)",
+      "name": "3. GET /events/:id (Status 200)",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/events/event-2",
+          "raw": "{{baseUrl}}/events/{{eventId}}",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
             "events",
-            "event-2"
+            "{{eventId}}"
           ]
         },
-        "description": "Belirli bir etkinliğin detayını getirme (Status 200 OK)"
+        "description": "Listeden alınan MongoDB _id ile tek etkinlik detayı (Status 200 OK)"
       },
       "response": []
     },
     {
-      "name": "4. GET /events/yok (Status 404)",
+      "name": "4. GET /events/111111 (Status 404 Not Found)",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/events/yok",
+          "raw": "{{baseUrl}}/events/111111",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
             "events",
-            "yok"
+            "111111"
           ]
         },
-        "description": "Bulunamayan etkinlik için 404 Not Found kontrolü (Status 404)"
+        "description": "Geçersiz ObjectId için 500 yerine 404 Not Found kontrolü (Status 404)"
       },
       "response": []
     },
     {
-      "name": "5. POST /events (Tam body) (Status 201)",
+      "name": "5. POST /events (Tam body - Status 201)",
       "request": {
         "method": "POST",
         "header": [
@@ -92,7 +92,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"title\": \"Açık Kaynak Hackathonu\",\n  \"category\": \"Yarışma\",\n  \"date\": \"2026-11-25\",\n  \"time\": \"09:00\",\n  \"location\": \"Mühendislik Fakültesi\",\n  \"description\": \"24 saatlik açık kaynak kod maratonu.\",\n  \"capacity\": 100\n}",
+          "raw": "{\n  \"title\": \"React 19 Workshop\",\n  \"date\": \"2026-12-10\",\n  \"location\": \"Binası D-101\",\n  \"category\": \"Yazılım\",\n  \"capacity\": 30,\n  \"description\": \"Yeni hook'lar ve Server Components\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -113,7 +113,7 @@
       "response": []
     },
     {
-      "name": "6. POST /events (Sadece title) (Status 400)",
+      "name": "6. POST /events (Sadece title - Status 400)",
       "request": {
         "method": "POST",
         "header": [
@@ -124,7 +124,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"title\": \"Eksik Etkinlik\"\n}",
+          "raw": "{\n  \"title\": \"Eksik etkinlik\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -140,7 +140,7 @@
             "events"
           ]
         },
-        "description": "Sadece title ile eksik veri gönderimi doğrulaması (Status 400 Bad Request)"
+        "description": "Eksik veri gönderimi şema doğrulaması (Status 400 Bad Request)"
       },
       "response": []
     }
@@ -149,6 +149,11 @@
     {
       "key": "baseUrl",
       "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "eventId",
+      "value": "64f51b008101ac087a0b1b55",
       "type": "string"
     }
   ]
