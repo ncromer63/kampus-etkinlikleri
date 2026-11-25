@@ -7,7 +7,7 @@ export const seedEvents = [
   {
     title: "Kariyer Günleri 2026",
     category: "Kariyer",
-    date: "2026-10-12",
+    date: "01-12-2026",
     location: "A Blok Konferans Salonu",
     description: "Mezunlarla kariyer söyleşileri ve şirket standları.",
     capacity: 120,
@@ -15,7 +15,7 @@ export const seedEvents = [
   {
     title: "Robotik Atölyesi",
     category: "Yazılım",
-    date: "2026-10-20",
+    date: "15-10-2026",
     location: "Bilgisayar Laboratuvarı 2",
     description: "Arduino ile çizgi izleyen robot yapımı, başlangıç seviyesi.",
     capacity: 20,
@@ -23,7 +23,7 @@ export const seedEvents = [
   {
     title: "Siber Güvenlik Söyleşisi",
     category: "Kariyer",
-    date: "2026-10-27",
+    date: "08-12-2026",
     location: "B Blok Amfi 1",
     description: "Sektörden bir uzmanla güvenlik kariyeri üzerine sohbet.",
     capacity: 50,
@@ -31,30 +31,30 @@ export const seedEvents = [
   {
     title: "Web Tasarım Atölyesi",
     category: "Tasarım",
-    date: "2026-11-03",
+    date: "05-11-2026",
     location: "Bilgisayar Laboratuvarı 1",
     description: "HTML ve CSS ile ilk kişisel sayfanı yap.",
     capacity: 30,
   },
   {
-    title: "Yapay Zeka ve Gelecek",
+    title: "Kodlama Yarışması",
     category: "Yazılım",
-    date: "2026-11-10",
+    date: "15-12-2026",
+    location: "Mühendislik Fakültesi",
+    description: "Algoritma ve yazılım geliştirme yarışması.",
+    capacity: 60,
+  },
+  {
+    title: "Yapay Zekâ Semineri",
+    category: "Yazılım",
+    date: "17-12-2026",
     location: "A Blok Konferans Salonu",
     description: "Büyük dil modelleri ve günlük hayattaki uygulamaları.",
     capacity: 150,
   },
-  {
-    title: "Tasarım İlkeleri ve Tipografi",
-    category: "Tasarım",
-    date: "2026-11-18",
-    location: "Açık Hava Amfisi",
-    description: "Kullanıcı deneyimi ve modern tipografi üzerine atölye.",
-    capacity: 40,
-  },
 ];
 
-async function runSeed() {
+export async function runSeed() {
   try {
     await connectDatabase();
     await Event.deleteMany({});
@@ -67,6 +67,6 @@ async function runSeed() {
   }
 }
 
-if (process.argv[1]?.replace(/\\/g, '/').endsWith('seed-events.js')) {
+if (process.argv[1] && process.argv[1].includes("seed")) {
   runSeed();
 }
