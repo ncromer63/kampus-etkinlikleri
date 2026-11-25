@@ -14,7 +14,7 @@ export const seedEvents = [
   },
   {
     title: "Robotik Atölyesi",
-    category: "Yazılım",
+    category: "Atölye",
     date: "15-10-2026",
     location: "Bilgisayar Laboratuvarı 2",
     description: "Arduino ile çizgi izleyen robot yapımı, başlangıç seviyesi.",
@@ -30,7 +30,7 @@ export const seedEvents = [
   },
   {
     title: "Web Tasarım Atölyesi",
-    category: "Tasarım",
+    category: "Atölye",
     date: "05-11-2026",
     location: "Bilgisayar Laboratuvarı 1",
     description: "HTML ve CSS ile ilk kişisel sayfanı yap.",

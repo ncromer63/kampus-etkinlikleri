@@ -24,7 +24,7 @@ const eventSchema = new mongoose.Schema(
     category: {
       type: String,
       required: true,
-      enum: ["Yazılım", "Tasarım", "Kariyer"],
+      enum: ["Yazılım", "Tasarım", "Kariyer", "Atölye", "Seminer", "Söyleşi", "Yarışma"],
     },
     capacity: {
       type: Number,
